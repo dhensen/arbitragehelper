@@ -1,0 +1,10 @@
+{
+  "name": "arbitragehelper",
+  "version": "0.0.1",
+  "main": "index.js",
+  "author": "Dino Hensen",
+  "license": "MIT",
+  "dependencies": {
+    "ccxt": "^1.10.503"
+  }
+}
