@@ -26,10 +26,15 @@ Looking for all compatible XRP symbols to calculate arbitrage:
 ## Using CCXT
 
 I've implemented this using CCXT. This allows you to easily use another exchange. In the example I have used Binance but you could for example just as easily use Poloniex like this:
+
+In arbitragehelper.js edit:
 ```
 var helper = new ArbitrageHelper(new ccxt.poloniex());
 helper.getCompatibleSymbols('XRP');
-# ...save then run it again:
+```
+Save file then run it again:
+
+```
 node lib/arbitragehelper.js
 There are 99 total symbols on this exchange.
 Looking for all XRP symbols:
