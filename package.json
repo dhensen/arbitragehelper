@@ -1,9 +1,17 @@
 {
   "name": "arbitragehelper",
+  "description": "A library providing helpers to perform triangular arbitrage on the cryptocurrency market",
   "version": "0.0.1",
-  "main": "index.js",
-  "author": "Dino Hensen",
+  "main": "./index.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:dhensen/arbitragehelper.git"
+  },
+  "author": "Dino Hensen <dino.hensen@gmail.com> (https://www.dinohensen.nl/)",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dhensen/arbitragehelper/issues"
+  },
   "dependencies": {
     "ccxt": "^1.10.503"
   }

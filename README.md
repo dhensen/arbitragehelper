@@ -9,9 +9,13 @@ When running this code for a target asset, lets say `BTC` it gives you two lists
 2. a list of all symbols that can trade between all assets from the previous list
 
 ```
-$ vim lib/arbitragehelper.js
-# scroll down and call getCompatibleSymbols with the `XRP` symbol
-$ node lib/arbitragehelper.js
+git clone git@github.com:dhensen/arbitragehelper.git
+yarn
+node examples/xrp.js
+```
+
+Output:
+```
 There are 231 total symbols on this exchange.
 Looking for all XRP symbols:
         Found 2 other assets compatible with XRP.
@@ -27,9 +31,9 @@ Looking for all compatible XRP symbols to calculate arbitrage:
 
 I've implemented this using CCXT. This allows you to easily use another exchange. In the example I have used Binance but you could for example just as easily use Poloniex like this:
 
-In arbitragehelper.js edit:
+In `examples/xrp.js` edit:
 ```
-var helper = new ArbitrageHelper(new ccxt.poloniex());
+var helper = new arbitrageHelper.symbolFinder(new ccxt.poloniex());
 helper.getCompatibleSymbols('XRP');
 ```
 Save file then run it again:
