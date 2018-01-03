@@ -4,9 +4,7 @@ ccxt = require('ccxt');
 
 var exchange = new ccxt.binance();
 
-exchange.fetchTickers().then(function (tickers) { console.log(Object.keys(tickers)); });
-
-// return;
+// exchange.fetchTickers().then(function (tickers) { console.log(Object.keys(tickers)); });
 
 var targetAsset = 'BTC';
 var helper = new arbitrageHelper.symbolFinder(exchange, false);
@@ -27,15 +25,6 @@ function matchSymbol(targetAsset, edgeSymbol, innerSymbol) {
     return false;
 }
 
-function calcProfit(symbol1, place1, symbol2, place2, symbol3, place3) {
-    // symbol1: BTC/ETH
-    // place1: base
-    // symbol2:  XRP/ETH
-    // place2: quote
-    // symbol3: XRP/BTC
-    // place3: quote
-}
-
 var tickerCache = [];
 async function fetchCachedTicker(exchange, symbol) {
     if (!symbol in tickerCache) {
@@ -53,11 +42,12 @@ var chainsPromise = symbols.then(async function ({ sourceSymbols, compatibleSymb
             }
             for (thirdSymbol of sourceSymbols) {
                 if (matchSymbol(targetAsset, thirdSymbol, secondSymbol)) {
-                    if (chainz.length == 1) {
-                        continue;
-                    }
+                    // if (chainz.length == 1) {
+                    //     continue;
+                    // }
                     chainz.push([firstSymbol, secondSymbol, thirdSymbol]);
-                    console.log('[' + firstSymbol.base + ' ' + firstSymbol.quote + ']->[' + secondSymbol.base + ' ' + secondSymbol.quote + ']->[' + thirdSymbol.base + ' ' + thirdSymbol.quote + ']');
+                    // console.log('[' + firstSymbol.base + ' ' + firstSymbol.quote + ']->[' + secondSymbol.base + ' ' + secondSymbol.quote + ']->[' + thirdSymbol.base + ' ' + thirdSymbol.quote + ']');
+                    console.log('[' + firstSymbol.symbol + ']->[' + secondSymbol.symbol + ']->[' + thirdSymbol.symbol + ']');
                 }
             }
         }
@@ -66,9 +56,9 @@ var chainsPromise = symbols.then(async function ({ sourceSymbols, compatibleSymb
     return chainz;
 });
 
-chainsPromise.then(function (chains) {
-    console.log('Found ' + chains.length + ' symbol chains for ' + targetAsset);
-    console.log(chains[0]);
-
-    calcProfit()
-});
+// chainsPromise.then(function (chains) {
+//     console.log('Found ' + chains.length + ' symbol chains for ' + targetAsset);
+//     console.log(chains[0]);
+//     [ symbol1, symbol2, symbol3 ] = chains[0];
+//     calcProfit(1, targetAsset, symbol1, symbol2, symbol3)
+// });

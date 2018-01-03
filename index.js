@@ -1,4 +1,5 @@
 
 symbolFinder = require('./lib/symbolFinder');
+calculateTriage = require('./lib/triage');
 
-module.exports = { symbolFinder }
+module.exports = { symbolFinder, calculateTriage }
