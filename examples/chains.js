@@ -1,5 +1,9 @@
 'use strict';
 
+/*
+Chainz.js but by Joey
+*/
+
 const arbitrageHelper = require('../index');
 const ccxt = require('ccxt');
 const exchange = new ccxt.binance();
@@ -37,12 +41,12 @@ async function fetchCachedTicker(exchange, symbol) {
 const chainsPromise = symbols.then(async function ({ sourceSymbols, compatibleSymbols }) {
     let chainz = [];
 
-    for (let firstSymbol of sourceSymbols) {
-        for (let secondSymbol of compatibleSymbols) {
+    for (firstSymbol of sourceSymbols) {
+        for (secondSymbol of compatibleSymbols) {
             if (!matchSymbol(targetAsset, firstSymbol, secondSymbol)) {
                 continue;
             }
-            for (let thirdSymbol of sourceSymbols) {
+            for (thirdSymbol of sourceSymbols) {
                 if (matchSymbol(targetAsset, thirdSymbol, secondSymbol)) {
                     // if (chainz.length == 1) {
                     //     continue;
@@ -58,18 +62,9 @@ const chainsPromise = symbols.then(async function ({ sourceSymbols, compatibleSy
     return chainz;
 });
 
-let sleep = (ms) => new Promise (resolve => setTimeout (resolve, ms))
-
-chainsPromise.then(async function (chains) {
-    console.log('Found ' + chains.length + ' symbol chains for ' + targetAsset);
-
-    for (let chain of chains) {
-        // console.log(chain);
-        let [ symbol1, symbol2, symbol3 ] = chain;
-        arbitrageHelper.triageForMarkets(exchange, symbol1.symbol, symbol2.symbol, symbol3.symbol)
-
-        // throttle api calls otherwise your IP gets banned
-        await sleep (exchange.rateLimit)
-    }
-
-});
+// chainsPromise.then(function (chains) {
+//     console.log('Found ' + chains.length + ' symbol chains for ' + targetAsset);
+//     console.log(chains[0]);
+//     [ symbol1, symbol2, symbol3 ] = chains[0];
+//     calcProfit(1, targetAsset, symbol1, symbol2, symbol3)
+// });
