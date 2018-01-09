@@ -1,52 +1,43 @@
 'use strict'
 
-const arbitragehelper = require('../index');
+const symbolFinder = require('../lib/symbolFinder');
 const ccxt = require('ccxt');
 const exchange = new ccxt.binance();
-const helper = new arbitrageHelper.symbolFinder('binance', false);
-
-const calcSingleChainWithFees = require('./src/calculators/calcSingleChain').calcSingleChainWithFees;
-
+const helper = new symbolFinder(exchange, false);
+const calcChainProfit = require('../lib/calcChainProfit');
 const targetAsset = 'ETH';
-const symbols = helper.getCompatibleSymbols(targetAsset);
-// helper.getCompatibleSymbols('XRP');
 
-// chain = ETH > XPR > BTC > ETH
-// const symbols = ['XRP/ETH', 'XRP/BTC', 'ETH/BTC'];
+function init() {
+    helper.getCompatibleSymbols(targetAsset).then(symbols => {
+        console.log(symbols);
+        
+        // Promise.all(
+        //     symbols.map(s => helper.exchange.fetchTicker(s))
+        // ).then((result) => {
+        //     const data = result.map(symbol => {
+        //         return {
+        //             name: symbol.symbol,
+        //             high: symbol.high,
+        //         };
+        //     });
 
+        
+            // console.log(data);
+        
+            // const profit = calcChainProfit({
+            //     a: result[0].high,
+            //     b: result[1].high,
+            //     c: result[2].high,
+            //     fee: 0.001
+            // });
+        
+            // console.log(profit);
+        // });
+    });
+}
 // binanceTradingFee = 0.1%
 
-// The symbol should be updated when the path shoud be reversed
-// e.g. XRP/BTC should be BTX/XRP
-// to do this: 1 / high
-
-const reverseSymbol = (symbol) => ({
-    
-});
-
-Promise.all(
-    symbols.map(s => helper.exchange.fetchTicker(s))
-).then((result) => {
-    const data = result.map(symbol => {
-        return {
-            name: symbol.symbol,
-            high: symbol.high,
-        };
-    });
-
-    console.log(data);
-
-    const profit = calcSingleChainWithFees({
-        a: result[0].high,
-        b: result[1].high,
-        c: result[2].high,
-        fee: 0.001
-    });
-
-    console.log(profit);
-});
-
-
+init();
 
 /*
 

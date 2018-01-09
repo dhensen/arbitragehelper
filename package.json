@@ -13,6 +13,7 @@
     "url": "https://github.com/dhensen/arbitragehelper/issues"
   },
   "dependencies": {
-    "ccxt": "^1.10.503"
+    "ccxt": "^1.10.503",
+    "lodash": "^4.17.4"
   }
 }
