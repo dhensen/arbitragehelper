@@ -1,9 +1,5 @@
 'use strict';
 
-/*
-Chainz.js but by Joey
-*/
-
 const arbitrageHelper = require('../index');
 const ccxt = require('ccxt');
 const exchange = new ccxt.binance();

@@ -1,5 +1,8 @@
 
-symbolFinder = require('./lib/symbolFinder');
+const symbolFinder = require('./lib/symbolFinder');
 const { calculateTriage, triageForMarkets } = require('./lib/triage');
+const { findChains } = require('./lib/chain');
 
-module.exports = { symbolFinder, calculateTriage, triageForMarkets }
+console.log(typeof(symbolFinder));
+
+module.exports = { symbolFinder, calculateTriage, triageForMarkets, findChains }
