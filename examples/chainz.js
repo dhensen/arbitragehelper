@@ -4,13 +4,12 @@ const arbitrageHelper = require('../index');
 const ccxt = require('ccxt');
 require('ansicolor').nice;
 
-const exchange = new ccxt.binance();
-
-let sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms))
-
 const colorProfit = percentage => percentage > 0 ? `${percentage}`.green : `${percentage}`.red;
 
+
+const exchange = new ccxt.binance();
 const targetAsset = 'ETH';
+
 arbitrageHelper.findChains(targetAsset, exchange)
     .then(async function (chains) {
         console.log('Found ' + chains.length + ' symbol chains for ' + targetAsset);
