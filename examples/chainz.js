@@ -16,6 +16,6 @@ arbitrageHelper.findChains(targetAsset, exchange)
             arbitrageHelper.triageForMarkets(exchange, chain)
 
             // throttle api calls otherwise your IP gets banned
-            await sleep(exchange.rateLimit)
+            await exchange.throttle();
         }
     });
