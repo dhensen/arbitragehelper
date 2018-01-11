@@ -16,7 +16,7 @@ arbitrageHelper.findChains(targetAsset, exchange)
         console.log('Found ' + chains.length + ' symbol chains for ' + targetAsset);
 
         for (let chain of chains) {
-            arbitrageHelper.triageForMarkets(exchange, chain).then(chain => {
+            arbitrageHelper.calculateChainProfit(exchange, chain).then(chain => {
                 console.log(chain + '; triage: ' + colorProfit(chain.triagePercentage) + ' %');
             });
 
