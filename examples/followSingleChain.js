@@ -20,15 +20,18 @@ const exchange = new ccxt.binance();
 
     await exchange.loadMarkets();
 
-    Promise.all([
-        exchange.getMarket('BNB/ETH'),
-        exchange.getMarket('ADX/BNB'),
-        exchange.getMarket('ADX/ETH'),
-    ]).then(async ([s1, s2, s3]) => {
+    // ETH [BNB/ETH]->[XZC/BNB]->[XZC/ETH]; triage: 3.4833247362673916 %
+    // ETH [BNB/ETH]->[ADX/BNB]->[ADX/ETH]; triage: 20.11872471318226 %z
+    let prechain = ['BNB/ETH', 'XZC/BNB', 'XZC/ETH'];
+
+    Promise.all(prechain.map(s => exchange.getMarket(s)))
+    .then(async ([s1, s2, s3]) => {
         const chain = new Chain('ETH', [s1, s2, s3]);
 
+        console.log(chain.getHashKey());
+
         while (true) {
-            // ETH [BNB/ETH]->[ADX/BNB]->[ADX/ETH]; triage: 20.11872471318226 %z
+
             arbitrageHelper.calculateChainProfit(exchange, chain)
                 .then(chain => {
                     console.log(chain + '; triage: ' + colorProfit(chain.triagePercentage) + ' %');
