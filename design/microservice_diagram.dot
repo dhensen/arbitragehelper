@@ -1,0 +1,29 @@
+digraph architecture {
+  node[fillcolor="#8eb2ed" style="filled" fontcolor="white"];
+  chain_ranker[label="chain-ranker"];
+  chain_worker[label="chain-worker"];
+  triage_order_worker[label="triage-order-worker"];
+  redis[label="redis"];
+
+  node[fillcolor="#edca8e" style="filled" fontcolor="black"];
+  ui[label="ui"];
+  api[label="api"];
+  database[label="database"];
+
+  node[fillcolor="white" style="filled" fontcolor="black"];
+
+  subgraph microservices {
+    ui -> api;
+    api -> database;
+    database -> chain_ranker;
+    chain_ranker -> redis;
+    redis -> chain_worker;
+    chain_worker -> triage_order_worker;
+    triage_order_worker -> api;
+
+    {rank=same; chain_ranker}
+    {rank=same; database, redis, ui, api}
+    {rank=same; chain_worker};
+    {rank=same; triage_order_worker};
+  }
+}
