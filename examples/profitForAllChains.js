@@ -8,18 +8,25 @@ const colorProfit = percentage => percentage > 0 ? `${percentage}`.green : `${pe
 
 
 const exchange = new ccxt.binance();
-const targetAsset = 'ETH';
+const targetAsset = 'TRX';
+const percentageThreshold = 0;
 
 arbitrageHelper.findChains(targetAsset, exchange)
     .then(async function (chains) {
         console.log('Found ' + chains.length + ' symbol chains for ' + targetAsset);
 
-        for (let chain of chains) {
-            arbitrageHelper.calculateChainProfit(exchange, chain).then(chain => {
-                console.log(chain + '; triage: ' + colorProfit(chain.triagePercentage) + ' %');
-            });
+        while (true) {
+            for (let chain of chains) {
+                arbitrageHelper.calculateChainProfit(exchange, chain).then(chain => {
+                    if (chain.triagePercentage >= percentageThreshold) {
+                        console.log(chain + '; triage: ' + colorProfit(chain.triagePercentage) + ' %');
+                    } else {
+                        console.log('.');
+                    }
+                });
 
-            // throttle api calls otherwise your IP gets banned
-            await exchange.throttle();
+                // throttle api calls otherwise your IP gets banned
+                await exchange.throttle();
+            }
         }
     });

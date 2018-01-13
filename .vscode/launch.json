@@ -8,7 +8,7 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceFolder}/examples/chainz.js"
+            "program": "${workspaceFolder}/examples/triageOrder.js"
         }
     ]
 }
