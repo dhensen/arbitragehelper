@@ -13,16 +13,17 @@ const exchange = new ccxt.binance();
 // example output: ETH > XRP > BTC > ETH: 0.39387353715572715%
 
 
-// debug chain: [ETH/BTC]->[ETH/USDT]->[ETH/BTC]
+// debug chain: [ETH/BTC', 'ETH/USDT', 'ETH/BTC]
 // arbitrageHelper.triageForMarkets(exchange, 'BTC', 'ETH/BTC', 'ETH/USDT', 'ETH/BTC');
 
 (async function () {
 
     await exchange.loadMarkets();
 
-    // ETH [BNB/ETH]->[XZC/BNB]->[XZC/ETH]; triage: 3.4833247362673916 %
-    // ETH [BNB/ETH]->[ADX/BNB]->[ADX/ETH]; triage: 20.11872471318226 %z
-    let prechain = ['BNB/ETH', 'XZC/BNB', 'XZC/ETH'];
+    // ETH [BNB/ETH', 'BRD/BNB', 'BRD/ETH]; triage: 2.832210819738634 %
+    // ETH [BNB/ETH', 'XZC/BNB', 'XZC/ETH]; triage: 3.4833247362673916 %
+    // ETH [BNB/ETH', 'ADX/BNB', 'ADX/ETH]; triage: 20.11872471318226 %z
+    let prechain = ['BNB/ETH', 'BRD/BNB', 'BRD/ETH'];
 
     Promise.all(prechain.map(s => exchange.getMarket(s)))
     .then(async ([s1, s2, s3]) => {
