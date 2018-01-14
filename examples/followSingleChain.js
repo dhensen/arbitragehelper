@@ -1,7 +1,7 @@
 'use strict';
 
 const arbitrageHelper = require('../index');
-const { Chain } = require('../lib/chain');
+const { Chain, createChain } = require('../lib/chain');
 const ccxt = require('ccxt');
 require('ansicolor').nice;
 
@@ -23,24 +23,22 @@ const exchange = new ccxt.binance();
     // ETH [BNB/ETH', 'BRD/BNB', 'BRD/ETH]; triage: 2.832210819738634 %
     // ETH [BNB/ETH', 'XZC/BNB', 'XZC/ETH]; triage: 3.4833247362673916 %
     // ETH [BNB/ETH', 'ADX/BNB', 'ADX/ETH]; triage: 20.11872471318226 %z
-    let prechain = ['ETH/BTC','BCD/ETH','BCD/BTC'];
+    // let prechain = ['ETH/BTC','CTR/BTC','CTR/ETH'];
+    let prechain = ['NULS/ETH', 'NULS/BNB', 'BNB/ETH'];
+    let targetAsset = 'ETH';
 
-    Promise.all(prechain.map(s => exchange.getMarket(s)))
-    .then(async ([s1, s2, s3]) => {
-        const chain = new Chain('BTC', [s1, s2, s3]);
+    const chain = await createChain(exchange, targetAsset, ...prechain);
+    console.log(chain.getHashKey());
 
-        console.log(chain.getHashKey());
+    while (true) {
 
-        while (true) {
+        arbitrageHelper.calculateChainProfit(exchange, chain)
+            .then(chain => {
+                console.log(chain + '; triage: ' + colorProfit(chain.triagePercentage) + ' %');
+            });
 
-            arbitrageHelper.calculateChainProfit(exchange, chain)
-                .then(chain => {
-                    console.log(chain + '; triage: ' + colorProfit(chain.triagePercentage) + ' %');
-                });
-
-            await exchange.throttle();
-        }
-    });
+        await exchange.throttle();
+    }
 
 
 })();

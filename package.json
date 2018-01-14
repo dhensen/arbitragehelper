@@ -14,10 +14,11 @@
   },
   "dependencies": {
     "ccxt": "^1.10.503",
-    "lodash": "^4.17.4"
+    "command-line-args": "^4.0.7",
+    "command-line-usage": "^4.0.2",
+    "ansicolor": "^1.1.71"
   },
   "devDependencies": {
-    "ansicolor": "^1.1.71",
     "eslint": "^4.15.0"
   }
 }
