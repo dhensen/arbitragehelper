@@ -13,6 +13,14 @@
     "url": "https://github.com/dhensen/arbitragehelper/issues"
   },
   "dependencies": {
-    "ccxt": "^1.10.503"
+    "ccxt": "^1.10.503",
+    "command-line-args": "^4.0.7",
+    "command-line-usage": "^4.0.2",
+    "ansicolor": "^1.1.71"
+  },
+  "devDependencies": {
+    "eslint": "^4.15.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0"
   }
 }

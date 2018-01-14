@@ -1,0 +1,29 @@
+digraph architecture {
+  node[fillcolor="#8eb2ed" style="filled" fontcolor="white"];
+  tpa_ranker[label="tpa-ranker"];
+  tpa_worker[label="tpa-worker"];
+  tpa_order_worker[label="tpa-order-worker"];
+  redis[label="redis"];
+
+  node[fillcolor="#edca8e" style="filled" fontcolor="black"];
+  ui[label="ui"];
+  api[label="api"];
+  database[label="database"];
+
+  node[fillcolor="white" style="filled" fontcolor="black"];
+
+  subgraph microservices {
+    ui -> api;
+    api -> database;
+    database -> tpa_ranker;
+    tpa_ranker -> redis;
+    redis -> tpa_worker;
+    tpa_worker -> tpa_order_worker;
+    tpa_order_worker -> api;
+
+    {rank=same; tpa_ranker}
+    {rank=same; database, redis, ui, api}
+    {rank=same; tpa_worker};
+    {rank=same; tpa_order_worker};
+  }
+}
